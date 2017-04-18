@@ -3,12 +3,13 @@
 # https://github.com/ether/etherpad-docker
 #
 # Developed from a version by Evan Hazlett at https://github.com/arcus-io/docker-etherpad 
+# Developed from a version by John E. Arnold at https://github.com/ether/etherpad-docker.
 #
 # Version 1.0
 
 # Use Docker's nodejs, which is based on ubuntu
 FROM node:latest
-MAINTAINER John E. Arnold, iohannes.eduardus.arnold@gmail.com
+MAINTAINER Simon ANDRÉ, Anybox (https://anybox.fr)
 
 # Get Etherpad-lite's other dependencies
 RUN apt-get update
