@@ -29,4 +29,5 @@ ADD pg_md5_auth.patch /root
 RUN cd /opt/etherpad/node_modules/ep_etherpad-lite/node_modules/pg && patch -p1 < /root/pg_md5_auth.patch
 
 EXPOSE 9001
+WORKDIR /opt/etherpad
 CMD ["node", "/opt/etherpad/node_modules/ep_etherpad-lite/node/server.js"]
