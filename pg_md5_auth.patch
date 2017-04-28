@@ -1,0 +1,22 @@
+diff --git a/lib/client.js b/lib/client.js
+index 3b688f9..3d44bf9 100644
+--- a/lib/client.js
++++ b/lib/client.js
+@@ -84,7 +84,7 @@ Client.prototype.connect = function(callback) {
+   //password request handling
+   con.on('authenticationMD5Password', checkPgPass(function(msg) {
+     var inner = Client.md5(self.password + self.user);
+-    var outer = Client.md5(inner + msg.salt.toString('binary'));
++    var outer = Client.md5(Buffer.concat([new Buffer(inner), msg.salt]));
+     var md5password = "md5" + outer;
+     con.password(md5password);
+   }));
+@@ -327,7 +327,7 @@ Client.prototype.end = function() {
+ };
+ 
+ Client.md5 = function(string) {
+-  return crypto.createHash('md5').update(string).digest('hex');
++  return crypto.createHash('md5').update(string, 'utf-8').digest('hex');
+ };
+ 
+ // expose a Query constructor

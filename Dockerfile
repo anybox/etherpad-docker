@@ -21,6 +21,13 @@ RUN cd /opt && git clone https://github.com/ether/etherpad-lite.git etherpad
 # Install node dependencies
 RUN /opt/etherpad/bin/installDeps.sh
 
+# patch PostgreSQL client lib to fix MD5 authentication,
+# while waiting for it to be fixed all the way, see
+# - https://github.com/Pita/ueberDB/pull/93,
+# - https://github.com/ether/etherpad-lite/issues/3180
+ADD pg_md5_auth.patch /root
+RUN cd /opt/etherpad/node_modules/ep_etherpad-lite/node_modules/pg && patch -p1 < /root/pg_md5_auth.patch
 
 EXPOSE 9001
+WORKDIR /opt/etherpad
 CMD ["node", "/opt/etherpad/node_modules/ep_etherpad-lite/node/server.js"]
